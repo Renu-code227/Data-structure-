@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the end of the list
+void insertEnd(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+// Function to search for a value in the linked list
+int search(struct Node* head, int key) {
+    struct Node* current = head;
+    while (current != NULL) {
+        if (current->data == key) {
+            return 1; // Key found
+        }
+        current = current->next;
+    }
+    return 0; // Key not found
+}
+
+// Function to print the linked list
+void printList(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    // Insert some elements into the list
+    insertEnd(&head, 10);
+    insertEnd(&head, 20);
+    insertEnd(&head, 30);
+    insertEnd(&head, 40);
+    insertEnd(&head, 50);
+
+    // Print the list
+    printf("Linked list: ");
+    printList(head);
+
+    // Search for a key
+    int key = 30;
+    if (search(head, key)) {
+        printf("Element %d is found in the linked list.\n", key);
+    } else {
+        printf("Element %d is not found in the linked list.\n", key);
+    }
+
+    return 0;
+}
